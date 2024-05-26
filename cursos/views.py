@@ -27,7 +27,7 @@ def aula(request, id):
         comentarios = Comentarios.objects.filter(aula = aula).order_by('-data')
 
         request_usuario = request.session.get('usuario')
-        usuario_avaliou = NotasAulas.objects.filter(aula_id = id).filter(usuario_id = request_usuario)
+        usuario_avaliou = NotasAulas.objects.filter(aula_id = id).filter(usuario_id = request_usuario) # Verifica se o usuário já avaliou
         avaliacoes = NotasAulas.objects.filter(aula_id = id)
 
 
@@ -51,7 +51,7 @@ def comentarios(request):
                                        aula_id = aula_id)
     comentario_instancia.save()
 
-    comentarios = Comentarios.objects.filter(aula = aula_id).order_by('-data')
+    comentarios = Comentarios.objects.filter(aula = aula_id).order_by('-data') # ordernar os comentários por ordem contrária, ou seja, comentário atual vai ser o 1º
     somente_nomes = [i.usuario.nome for i in comentarios]
     somente_comentarios = [i.comentario for i in comentarios]
     comentarios = list(zip(somente_nomes, somente_comentarios))

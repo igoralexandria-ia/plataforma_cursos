@@ -39,21 +39,24 @@ def valida_cadastro(request):
                           email = email,
                           senha = senha) # O campo nome definido no models tem que ser igual ao do formulário
         usuario.save()
-        return redirect('/auth/cadastro/?status=0')
+        return redirect('/auth/login/?status=0')
     except:
         return redirect('/auth/cadastro/?status=5')
     
 def valida_login(request):
-    email = request.POST.get('email')
-    senha = request.POST.get('senha')
-    senha = hashlib.sha256(senha.encode()).hexdigest() # Como no cadastrado utilizamos hash para criptografar senha, então aqui antes de filtrar os usuários, deve chamar a hash
-    usuarios = Usuario.objects.filter(email = email).filter(senha = senha) # Verificar se existem usuários com email e senha cadastrado
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+        senha = hashlib.sha256(senha.encode()).hexdigest() # Como no cadastrado utilizamos hash para criptografar senha, então aqui antes de filtrar os usuários, deve chamar a hash
+        usuarios = Usuario.objects.filter(email = email).filter(senha = senha) # Verificar se existem usuários com email e senha cadastrado
 
-    if len(usuarios) == 0:
-        return redirect('/auth/login/?status=1') # Email e Senha não podem ser os mesmos
-    elif len(usuarios) > 0:
+        if not usuarios.exists():
+            return redirect('/auth/login/?status=1')
+        
         request.session['usuario'] = usuarios[0].id # session global
         return redirect('/home/')
+    
+    return redirect('/auth/login/')
     
 def sair(request):
     request.session.flush()

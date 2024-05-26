@@ -27,7 +27,7 @@ Logar
             <br>
             <h1>Login</h1>
             <hr>
-            <form method="POST" action="{% url 'valida_login'%}">{% csrf_token %}
+            <form method="POST" action="{% url 'valida_login' %}">{% csrf_token %}
                 <label>Digite seu Email:</label>
                 <input class="form-control" type="text" placeholder="E-mail" name="email">
                 <br>

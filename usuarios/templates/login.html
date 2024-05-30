@@ -1,47 +1,81 @@
-{% extends 'base.html'%}
+{% load static %}
 
-{% block 'titulo'%}
-Logar
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'geral/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'geral/css/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/animate/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/css-hamburgers/hamburgers.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/animsition/css/animsition.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/select2/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/vendor/daterangepicker/daterangepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geral/css/main.css' %}">
+</head>
 
-{% endblock%}
+<body>
 
-{% block 'body' %}
-<div class="container">
-    <br>
-    {% if status == '1' %}
-    <div class="alert alert-danger" role="alert">
-        E-mail ou senha inválido
-    </div>
-    {% endif %}
-    {% if status == '2' %}
-    <div class="alert alert-warning" role="alert">
-        Faça login antes de acessar o sistema!
-    </div>
-    {% endif %}
+    <div class="limiter">
+        <div class="container-login100">
+            
+            <div class="wrap-login100">
+                {% if status == '1' %}
+            <div class="alert alert-danger" role="alert">
+                E-mail ou senha inválido
+            </div>
+            {% endif %}
+            {% if status == '2' %}
+            <div class="alert alert-warning" role="alert">
+                Faça login antes de acessar o sistema!
+            </div>
+            {% endif %}
+                <div class="login100-form-title"
+                    style="background-image: url('{% static 'geral/images/bg-01.jpg' %}');">
+                    <span class="login100-form-title-1">
+                        Login
+                    </span>
+                </div>
 
-    <div class="row">
-        <div class="col-md-3">
+                <form class="login100-form validate-form" method="POST" action="{% url 'valida_login' %}">{% csrf_token %}
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Digite seu E-mail:</span>
+                        <input class="input100" type="text" placeholder="E-mail" name="email">
+                        <span class="focus-input100"></span>
+                    </div>
 
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Senha</span>
+                        <input class="input100" type="password" placeholder="Senha" name="senha">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" type="submit">
+                            Login
+                        </button>
+                        <a href="{% url 'cadastro' %}" class="login100-form-btn" style="margin: 0 15; text-decoration: none;">Cadastre-se</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="col-md">
-            <br>
-            <h1>Login</h1>
-            <hr>
-            <form method="POST" action="{% url 'valida_login' %}">{% csrf_token %}
-                <label>Digite seu Email:</label>
-                <input class="form-control" type="text" placeholder="E-mail" name="email">
-                <br>
-                <label>Digite seu senha:</label>
-                <input class="form-control" type="password" placeholder="Senha" name="senha">
-                <br>
-                <input class="btn btn-success btn-lg" type="submit">
-                <a href="{% url 'cadastro' %}" class="btn btn-info btn-lg">Cadastre-se</a>
-            </form>
-        </div>
-        <div class="col-md-3">
-
-        </div>
     </div>
 
-</div>
-{% endblock %}
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
